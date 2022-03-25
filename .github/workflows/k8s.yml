@@ -1,6 +1,6 @@
 # @format
 
-name: My First Workflow
+name: k8s deployment
 on: [push]
 jobs:
   build-app:
