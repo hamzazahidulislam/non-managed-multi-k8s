@@ -9,3 +9,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: check folders
         run: ls -la | less
+      - name: print hello
+        run: echo "Hello World!"
