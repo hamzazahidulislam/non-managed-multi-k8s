@@ -3,7 +3,21 @@
 name: k8s deployment
 on: [push]
 jobs:
-  build-app:
+  docker-image-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build worker image
+        run: docker build -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:$(date +%s) -f ./worker/Dockerfile ./worker
+      - name: build client image
+        run: docker build -t hamzazahid/multi-client:$(date +%s) -f ./client/Dockerfile ./client
+      - name: build server image
+        run: docker build -t hamzazahid/multi-server:latest -t hamzazahid/multi-server:$(date +%s) -f ./server/Dockerfile ./server
+      - name: check docker images
+        run: docker image ls | less
+
+  deploy-k8s:
+    needs: docker-image-build
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
