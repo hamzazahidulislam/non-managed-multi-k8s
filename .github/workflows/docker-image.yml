@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: build worker image
-        run: docker build ./worker --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build ../worker --file Dockerfile --tag my-image-name:$(date +%s)
       - name: build client image
-        run: docker build ./client --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build ../client --file Dockerfile --tag my-image-name:$(date +%s)
       - name: build server image
-        run: docker build ./server --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build ../server --file Dockerfile --tag my-image-name:$(date +%s)
