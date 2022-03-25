@@ -3,7 +3,17 @@
 name: k8s deployment
 on: [push]
 jobs:
+  pass-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build frontend application for test coverage
+        run: docker build -t hamzazahid/react-test -f ./client/Dockerfile.dev ./client
+      - name: run frontend application for test coverage
+        run: docker run hamzazahid/react-test npm test -- --coverage
+
   docker-image-build:
+    needs: pass-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
