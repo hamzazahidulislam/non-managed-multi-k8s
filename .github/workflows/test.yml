@@ -1,0 +1,11 @@
+# @format
+
+name: My First Workflow
+on: [push]
+jobs:
+  build-app:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: check folders
+        run: ls -la | less
