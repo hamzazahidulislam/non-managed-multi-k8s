@@ -5,17 +5,17 @@ on:
   push:
     branches: main
 jobs:
-  pass-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: build frontend application for test coverage
-        run: docker build -t hamzazahid/react-test -f ./client/Dockerfile.dev ./client
-      - name: run frontend application for test coverage
-        run: docker run hamzazahid/react-test npm test -- --coverage
+  # pass-test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: build frontend application for test coverage
+  #       run: docker build -t hamzazahid/react-test -f ./client/Dockerfile.dev ./client
+  #     - name: run frontend application for test coverage
+  #       run: docker run hamzazahid/react-test npm test -- --coverage
 
   docker-image-build:
-    needs: pass-test
+    # needs: pass-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,26 +23,32 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: build worker image
-        run: docker build -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:$(date +%s) -f ./worker/Dockerfile ./worker
-      - name: build client image
-        run: docker build -t hamzazahid/multi-client:$(date +%s) -f ./client/Dockerfile ./client
-      - name: build server image
-        run: docker build -t hamzazahid/multi-server:latest -t hamzazahid/multi-server:$(date +%s) -f ./server/Dockerfile ./server
-      - name: check docker images
-        run: docker image ls | less
-      - name: multi-client push on docker registry with latest tag
-        run: docker push hamzazahid/multi-client:latest
-      - name: multi-server push on docker registry with latest tag
-        run: docker push hamzazahid/multi-server:latest
-      - name: multi-worker push on docker registry with latest tag
-        run: docker push hamzazahid/multi-worker:latest
-      - name: multi-client push on docker registry with latest current time:$(date +%s)
-        run: docker push hamzazahid/multi-client:$(date +%s)
-      - name: multi-server push on docker registry with latest current time:$(date +%s)
-        run: docker push hamzazahid/multi-server:$(date +%s)
-      - name: multi-worker push on docker registry with latest current time:$(date +%s)
-        run: docker push hamzazahid/multi-worker:$(date +%s)
+      - name: build worker image and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./worker/
+          push: true
+          tags: user/app:latest
+      # - name: build worker image
+      #   run: docker build -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:$(date +%s) -f ./worker/Dockerfile ./worker
+      # - name: build client image
+      #   run: docker build -t hamzazahid/multi-client:$(date +%s) -f ./client/Dockerfile ./client
+      # - name: build server image
+      #   run: docker build -t hamzazahid/multi-server:latest -t hamzazahid/multi-server:$(date +%s) -f ./server/Dockerfile ./server
+      # - name: check docker images
+      #   run: docker image ls | less
+      # - name: multi-client push on docker registry with latest tag
+      #   run: docker push hamzazahid/multi-client:latest
+      # - name: multi-server push on docker registry with latest tag
+      #   run: docker push hamzazahid/multi-server:latest
+      # - name: multi-worker push on docker registry with latest tag
+      #   run: docker push hamzazahid/multi-worker:latest
+      # - name: multi-client push on docker registry with latest current time:$(date +%s)
+      #   run: docker push hamzazahid/multi-client:$(date +%s)
+      # - name: multi-server push on docker registry with latest current time:$(date +%s)
+      #   run: docker push hamzazahid/multi-server:$(date +%s)
+      # - name: multi-worker push on docker registry with latest current time:$(date +%s)
+      #   run: docker push hamzazahid/multi-worker:$(date +%s)
 
   deploy-k8s:
     needs: docker-image-build
