@@ -9,7 +9,10 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
 1.  Create a VPC
     - create Public Subnet
     - Internet Gateways
+      - attach VPC with Internet Gateway
     - Route table
+      - Edit subnet associations
+      - create route to Internet Gateway
 2.  Create four EC2 instances.
     - Each instance should have a public IP address.
     - create a security group
@@ -20,3 +23,39 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
     - two instance for Worker Node
 5.  Github Action add self hosted runner
 6.  deploy the application on the Master Node
+
+# Create a VPC
+
+I create a VPC and I add CIDR 20.0.0.0/16
+
+### VPC IP Address
+
+**VPC: IP Address (20.20.0.0/16)**
+
+<a href="./images/create-vpc.png"><img src="./images/create-vpc.png" alt="create-vpc" border="0" width="100%"></a>
+
+## create Public Subnet
+
+**Subnet: IP Address (20.20.1.0/24)**
+
+<a href="./images/create-public-subnet.png"><img src="./images/create-public-subnet.png" alt="create-public-subnet" border="0" width="100%"></a>
+
+## Internet Gateways
+
+<a href="./images/create-igw.png"><img src="./images/create-igw.png" alt="create-igw.png" border="0" width="100%"></a>
+
+## attach VPC with Internet Gateway
+
+<a href="./images/attach-vpc.png"><img src="./images/attach-vpc.png" alt="attach-vpc.png" border="0" width="100%"></a>
+
+# Route table
+
+<a href="./images/create-route-table.png"><img src="./images/create-route-table.png" alt="create-route-table.png" border="0" width="100%"></a>
+
+## Edit subnet associations
+
+<a href="./images/edit-subnet-associations.png"><img src="./images/edit-subnet-associations.png" alt="edit-subnet-associations.png" border="0" width="100%"></a>
+
+# create route to Internet Gateway
+
+<a href="./images/edit-subnet-associations.png"><img src="./images/edit-subnet-associations.png" alt="edit-subnet-associations.png" border="0" width="100%"></a>
