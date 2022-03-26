@@ -24,10 +24,11 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
     - create a security group
     - create a key pair
     - Each instance should have a public IP address.
-3.  Create a load balancer with EC2.
-4.  Set up Kubernetes on each EC2 instance.
+3.  Set up Kubernetes on each EC2 instance.
+    - set security group rules
     - one intance for Master Node
     - two instance for Worker Node
+4.  Create a load balancer with EC2.
 5.  Github Action add self hosted runner
 6.  deploy the application on the Master Node
 
@@ -98,3 +99,25 @@ _we use ubuntu ec2 instance_
 ### create a key pair and last part of the instance
 
 <a href="./images/review.png"><img src="./images/review.png" alt="review.png" border="0" width="100%"></a>
+
+# Set up Kubernetes on each EC2 instance.
+
+### set security group rules
+
+<a href="./images/add-storage.png"><img src="./images/add-storage.png" alt="add-storage.png" border="0" width="100%"></a>
+
+ssh your master node
+
+    ssh -i ./devops-key-1.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
+
+ssh your worker-1 node
+
+    ssh -i ./devops-key-1.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
+
+ssh your worker-2 node
+
+    ssh -i ./devops-key-1.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
+
+### after you install this package
+
+[install k8s ](https://gist.github.com/hamzazahidulislam/2c7e26b70b4988be08051ff9be49566b)
