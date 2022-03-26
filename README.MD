@@ -124,3 +124,80 @@ ssh your worker-2 node
 ### after you install this package
 
 [install k8s ](https://gist.github.com/hamzazahidulislam/2c7e26b70b4988be08051ff9be49566b)
+
+# one intance for Master Node
+
+```
+sudo apt-get update && sudo apt-get upgrade -y
+```
+
+_--------- Adding Kubernetese Repository -----_
+
+```
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
+```
+
+```
+sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+```
+
+```
+sudo vim /etc/apt/sources.list.d/kubernetes.list
+```
+
+```
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+```
+
+```
+sudo apt-get update
+```
+
+_----- Installing Kubeadm ----_
+
+```
+sudo apt-get install -y kubelet=1.20.2-00 kubeadm=1.20.2-00 kubectl=1.20.2-00
+```
+
+**The kubelet is now restarting every few seconds, as it waits in a crashloop for kubeadm to tell it what to do.**
+
+```
+sudo apt-mark hold kubelet kubeadm kubectl
+
+```
+
+**because it swap mem can degrade K8s orchestration performance**
+
+```
+sudo swapoff -a
+```
+
+_this command run on master node only_
+
+```
+sudo kubeadm init
+```
+
+_this command you get from master node and apply all worker nodes_
+
+```
+kubeadm join 20.0.1.178:6443 --token 6k8f6s.i4maop92yoyz7f2i \
+    --discovery-token-ca-cert-hash sha256:ff68e8deca05dc88326d5e2e5d23907c41e1dba61eac753ebf3e44967cde6b07
+```
+
+_this command run on master node only_
+
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+**_To achieve Overlay Network inside the K8s Cluster, we are going to install WeaveNet on Master node._**
+
+```
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
