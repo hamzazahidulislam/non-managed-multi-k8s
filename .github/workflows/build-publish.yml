@@ -50,4 +50,4 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Image digest
-        run: echo ${{ steps.final-build.digest }}
+        run: echo ${{ steps.final-build.Digest }}
