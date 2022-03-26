@@ -7,7 +7,7 @@ on:
     branches:
       - 'main'
 env:
-  tag: $(date +%s)
+  tag: date +%s
 
 jobs:
   docker:
