@@ -70,7 +70,7 @@ jobs:
       - name: check time tag same
         run: echo ${{ needs.docker-image-build.outputs.tag }} | grep -q ${{ env.tag }}
       - name: get git hash and branch
-        run: echo $(git rev-parse --short "$GITHUB_SHA") 
+        run: echo $(git rev-parse --short "$GITHUB_SHA")
 
   # deploy-k8s:
   #   needs: docker-image-build
