@@ -17,6 +17,8 @@ jobs:
   docker-image-build:
     # needs: pass-test
     runs-on: ubuntu-latest
+    output:
+      tag: ${{ steps.time-tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v2
       - uses: docker/login-action@v1
@@ -29,6 +31,11 @@ jobs:
           context: ./worker/
           push: true
           tags: user/app:latest
+      - name: get time tag
+        id: time-tag
+        run: echo "::set-output name=tag::$(date +%s)"
+      - name: check time tag
+        run: echo ${{ steps.time-tag.outputs.tag }}
       # - name: build worker image
       #   run: docker build -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:latest -t hamzazahid/multi-worker:$(date +%s) -f ./worker/Dockerfile ./worker
       # - name: build client image
@@ -49,13 +56,24 @@ jobs:
       #   run: docker push hamzazahid/multi-server:$(date +%s)
       # - name: multi-worker push on docker registry with latest current time:$(date +%s)
       #   run: docker push hamzazahid/multi-worker:$(date +%s)
-
-  deploy-k8s:
+  test:
+    runs-on: ubuntu-latest
     needs: docker-image-build
-    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
-      - name: check folders
-        run: ls -la | less
-      - name: print hello
-        run: echo "Hello World!"
+      # - name: build frontend application for test coverage
+      #   run: docker build -t hamzazahid/react-test -f ./client/Dockerfile.dev ./client
+      # - name: run frontend application for test coverage
+      #   run: docker run hamzazahid/react-test npm test -- --coverage
+      - name: check time tag same
+        run: echo ${{ needs.docker-image-build.outputs.tag }}
+
+  # deploy-k8s:
+  #   needs: docker-image-build
+  #   runs-on: self-hosted
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: check folders
+  #       run: ls -la | less
+  #     - name: print hello
+  #       run: echo "Hello World!"
