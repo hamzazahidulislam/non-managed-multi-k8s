@@ -14,7 +14,7 @@ jobs:
   #     - name: run frontend application for test coverage
   #       run: docker run hamzazahid/react-test npm test -- --coverage
 
-  docker-image-build-push-push-push:
+  docker-image-build-push:
     # needs: pass-test
     runs-on: ubuntu-latest
     outputs:
