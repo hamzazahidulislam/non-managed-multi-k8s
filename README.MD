@@ -4,8 +4,6 @@
 
 how I created this cluster and integrate Github Action
 
-docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
-
 1.  Create a VPC
     - create Public Subnet
       - Edit subnet settings
@@ -200,4 +198,85 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ```
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+
+# Create a load balancer with EC2.
+
+ssh your load-balancer ec2 instance
+
+    ssh -i ./devops-key-1.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
+
+```
+sudo apt-get update && sudo apt-get upgrade -y
+```
+
+_--------- Adding Kubernetese Repository -----_
+
+```
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
+```
+
+_create a nginx default configuration file_
+
+```
+ sudo vi default.conf
+```
+
+_after adding this configuration and please make sure you add the private IP of your ec2 instance_
+
+```
+upstream client {
+    server YOUR_EC2_PRIVATE_IP:30001;
+}
+
+upstream api {
+    server YOUR_EC2_PRIVATE_IP:30002;
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://client;
+    }
+
+    location /sockjs-node {
+        proxy_pass http://client;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+
+    location /api {
+        rewrite /api/(.*) /$1 break;
+        proxy_pass http://api;
+    }
+}
+```
+
+**create a Dockerfile for build nginx load balancer**
+
+```
+sudo vim Dockerfile
+```
+
+**_add this line_**
+
+```
+FROM nginx
+COPY ./default.conf /etc/nginx/conf.d/default.conf
+```
+
+_build your docker file_
+
+```
+sudo docker build -t nginx-lb .
+```
+
+_run your docker image_
+
+```
+docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
 ```
