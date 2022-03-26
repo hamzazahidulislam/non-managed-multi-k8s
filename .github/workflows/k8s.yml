@@ -61,8 +61,8 @@ jobs:
     needs: docker-image-build
     env:
       tag: ${{ needs.docker-image-build.outputs.tag }}
-      hi: git_hash=$(git rev-parse --short "$GITHUB_SHA")
-      hello: git_branch=${GITHUB_REF#refs/heads/}
+      hi: $(git rev-parse --short "$GITHUB_SHA")
+      hello: ${GITHUB_REF#refs/heads/}
     steps:
       - uses: actions/checkout@v2
       # - name: build frontend application for test coverage
