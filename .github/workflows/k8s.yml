@@ -61,8 +61,6 @@ jobs:
     needs: docker-image-build
     env:
       tag: ${{ needs.docker-image-build.outputs.tag }}
-      hi: $(git rev-parse --short "$GITHUB_SHA")
-      hello: ${GITHUB_REF#refs/heads/}
     steps:
       - uses: actions/checkout@v2
       # - name: build frontend application for test coverage
@@ -72,7 +70,7 @@ jobs:
       - name: check time tag same
         run: echo ${{ needs.docker-image-build.outputs.tag }} | grep -q ${{ env.tag }}
       - name: get git hash and branch
-        run: echo ${{ env.hi }} | grep -q ${{ env.hello }}
+        run: echo $(git rev-parse --short "$GITHUB_SHA") && ${GITHUB_REF#refs/heads/}
 
   # deploy-k8s:
   #   needs: docker-image-build
