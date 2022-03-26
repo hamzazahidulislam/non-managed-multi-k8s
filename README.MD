@@ -278,5 +278,5 @@ sudo docker build -t nginx-lb .
 _run your docker image_
 
 ```
-docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
+sudo docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
 ```
