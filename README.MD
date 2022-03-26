@@ -16,4 +16,7 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
     - create a key pair
 3.  Create a load balancer with EC2.
 4.  Set up Kubernetes on each EC2 instance.
-    - 
+    - one intance for Master Node
+    - two instance for Worker Node
+5.  Github Action add self hosted runner
+6.  deploy the application on the Master Node
