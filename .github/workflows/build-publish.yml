@@ -44,8 +44,7 @@ jobs:
           context: ./server/
           # Note: tags has to be all lower-case
           tags: |
-            hamzazahid/eventsourcing.nodejs.simple:latest 
-            # ghcr.io/hamzazahidulislam/eventsourcing.nodejs/simple:latest
+            hamzazahid/eventsourcing.nodejs.simple:latest
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
 
