@@ -8,6 +8,9 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
 
 1.  Create a VPC
     - create Public Subnet
+      - Edit subnet settings
+        - enable public IP
+        - enable NAT
     - Internet Gateways
       - attach VPC with Internet Gateway
     - Route table
@@ -40,6 +43,14 @@ I create a VPC and I add CIDR 20.0.0.0/16
 
 <a href="./images/create-public-subnet.png"><img src="./images/create-public-subnet.png" alt="create-public-subnet" border="0" width="100%"></a>
 
+## Edit subnet settings
+
+- ### enable public IP
+
+- ### enable _RBN_
+
+<a href="./images/edit-subnet-settings.png"><img src="./images/edit-subnet-settings.png" alt="edit-subnet-settings.png" border="0" width="100%"></a>
+
 ## Internet Gateways
 
 <a href="./images/create-igw.png"><img src="./images/create-igw.png" alt="create-igw.png" border="0" width="100%"></a>
@@ -58,4 +69,8 @@ I create a VPC and I add CIDR 20.0.0.0/16
 
 # create route to Internet Gateway
 
-<a href="./images/edit-subnet-associations.png"><img src="./images/edit-subnet-associations.png" alt="edit-subnet-associations.png" border="0" width="100%"></a>
+<a href="./images/create-route-to-Internet-gateway.png"><img src="./images/create-route-to-Internet-gateway.png" alt="create-route-to-Internet-gateway.png" border="0" width="100%"></a>
+
+# Create four EC2 instances.
+
+_we use ubuntu ec2 instances_
