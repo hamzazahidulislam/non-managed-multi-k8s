@@ -17,9 +17,13 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
       - Edit subnet associations
       - create route to Internet Gateway
 2.  Create four EC2 instances.
-    - Each instance should have a public IP address.
+    - Choose AMI
+    - Choose Instance Type
+    - configure instance
+    - Add storage
     - create a security group
     - create a key pair
+    - Each instance should have a public IP address.
 3.  Create a load balancer with EC2.
 4.  Set up Kubernetes on each EC2 instance.
     - one intance for Master Node
@@ -73,4 +77,24 @@ I create a VPC and I add CIDR 20.0.0.0/16
 
 # Create four EC2 instances.
 
-_we use ubuntu ec2 instances_
+_we use ubuntu ec2 instance_
+
+### Choose AMI
+
+<a href="./images/choose-ami.png"><img src="./images/choose-ami.png" alt="choose-ami.png" border="0" width="100%"></a>
+
+### Choose Instance Type
+
+<a href="./images/choose-instance-type.png"><img src="./images/choose-instance-type.png" alt="choose-instance-type.png" border="0" width="100%"></a>
+
+### configure instance
+
+<a href="./images/configure-instance.png"><img src="./images/configure-instance.png" alt="configure-instance.png" border="0" width="100%"></a>
+
+### Add storage
+
+<a href="./images/add-storage.png"><img src="./images/add-storage.png" alt="add-storage.png" border="0" width="100%"></a>
+
+### create a key pair and last part of the instance
+
+<a href="./images/review.png"><img src="./images/review.png" alt="review.png" border="0" width="100%"></a>
