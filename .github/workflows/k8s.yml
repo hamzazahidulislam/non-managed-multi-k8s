@@ -17,7 +17,7 @@ jobs:
   docker-image-build:
     # needs: pass-test
     runs-on: ubuntu-latest
-    output:
+    outputs:
       tag: ${{ steps.time-tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v2
