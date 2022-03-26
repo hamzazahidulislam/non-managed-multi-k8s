@@ -26,6 +26,7 @@ docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
     - Each instance should have a public IP address.
 3.  Set up Kubernetes on each EC2 instance.
     - set security group rules
+      - Edit inbound rules
     - one intance for Master Node
     - two instance for Worker Node
 4.  Create a load balancer with EC2.
@@ -104,7 +105,9 @@ _we use ubuntu ec2 instance_
 
 ### set security group rules
 
-<a href="./images/add-storage.png"><img src="./images/add-storage.png" alt="add-storage.png" border="0" width="100%"></a>
+- ### Edit inbound rules
+
+<a href="./images/edit-inbound-rules.png"><img src="./images/edit-inbound-rules.png" alt="edit-inbound-rules.png" border="0" width="100%"></a>
 
 ssh your master node
 
