@@ -231,11 +231,11 @@ _after adding this configuration and please make sure you add the private IP of 
 
 ```
 upstream client {
-    server YOUR_EC2_PRIVATE_IP:30001;
+    server YOUR_EC2_PRIVATE_IP_WORKER_IP:30001;
 }
 
 upstream api {
-    server YOUR_EC2_PRIVATE_IP:30002;
+    server YOUR_EC2_PRIVATE_IP_WORKER_IP:30002;
 }
 
 server {
