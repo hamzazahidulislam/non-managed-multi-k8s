@@ -29,6 +29,8 @@ how I created this cluster and integrate Github Action
     - two instance for Worker Node
 4.  Create a load balancer with EC2.
 5.  Github Action add self hosted runner
+    - Create self-hosted runner
+    - Configuring the self-hosted runner application as a service
 6.  deploy the application on the Master Node
 
 # Create a VPC
@@ -280,3 +282,58 @@ _run your docker image_
 ```
 sudo docker run --name nginx-load-balancer -p 80:80 -d nginx-lb
 ```
+
+# Github Action add self hosted runner
+
+### ssh your master node
+
+    ssh -i ./devops-key-1.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
+
+## Create self-hosted runner
+
+### Download
+
+**_Create a folder under the drive root_**
+
+    mkdir actions-runner; cd actions-runner
+
+**_Download the latest runner package_**
+
+    Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.288.1/actions-runner-win-x64-2.288.1.zip -OutFile actions-runner-win-x64-2.288.1.zip
+
+**_Optional: Validate the hash_**
+
+    echo "325b89bdc1c67264ec6f4515afda4534f14a6477d9ba241da19c43f9bed2f5a6  actions-runner-linux-x64-2.288.1.tar.gz" | shasum -a 256 -c
+
+_Extract the installer_
+
+    tar xzf ./actions-runner-linux-x64-2.288.1.tar.gz
+
+## Configure
+
+**Create the runner and start the configuration experience**
+
+    ./config.sh --url https://github.com/hamzazahidulislam/non-managed-multi-k8s --token ANMFZSANKJ6ILHDECU6X2QLCH7NU6
+
+**_Last step, run it!_**
+
+    ./run.sh
+
+_make sure you up to date with your self hosted runner_
+
+**you get runner in your repository settings**
+<a href="./images/self-hosted-runner.png"><img src="./images/self-hosted-runner.png" alt="self-hosted-runner.png" border="0" width="100%"></a>
+
+## Configuring the self-hosted runner application as a service
+
+Install the service with the following command:
+
+    sudo ./svc.sh install
+
+Start the service with the following command:
+
+    sudo ./svc.sh start
+
+Check the status of the service with the following command:
+
+    sudo ./svc.sh status
