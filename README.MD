@@ -337,3 +337,11 @@ Start the service with the following command:
 Check the status of the service with the following command:
 
     sudo ./svc.sh status
+
+_this is details_
+
+[You can configure the self-hosted runner application as a service to automatically start the runner application when the machine starts.](https://docs.github.com/en/actions/hosting-your-own-runners/configuring-the-self-hosted-runner-application-as-a-service)
+
+# deploy the application on the Master Node
+
+**_now you configured your ci cd completely, you push your code on github_**
